@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "studioName": "Studio Linear",
+    "studioEmail": "inquiries@studiolinear.com",
+    "projectName": "HEADCHANGE",
+    "lastUpdated": "July 13, 2026"
+  },
+  "status": {
+    "currentPhase": "Design Development",
+    "progress": 19,
+    "startDate": "June 24, 2026",
+    "targetEndDate": "November 20, 2026"
+  },
+  "phases": [
+    { "id": 1, "name": "Brand Strategy", "status": "waiting" },
+    { "id": 2, "name": "Brand Messaging", "status": "inprogress" },
+    { "id": 3, "name": "Visual Universe Exploration", "status": "waiting" },
+    { "id": 4, "name": "Brand Expansion Deck", "status": "upcoming" },
+    { "id": 5, "name": "Packaging Design", "status": "upcoming" },
+    { "id": 6, "name": "Website Refresh", "status": "upcoming" },
+    { "id": 7, "name": "In-store Display Design", "status": "upcoming" },
+    { "id": 8, "name": "Photography", "status": "upcoming" },
+    { "id": 9, "name": "Social Management", "status": "upcoming" }
+  ],
+  "thisWeek": {
+    "dateRange": "July 13 - Jul 17, 2026",
+    "tasks": [
+      "Final Brand Strategy approval",
+      "Brand Messaging delivery",
+      "Creative direction refinement"
+    ],
+    "upcomingMilestones": [
+      "Brand Strategy approved",
+      "Creative Direction approved",
+      "Brand Messaging review and feedback completed July 17, 2026"
+    ]
+  },
+  "waitingOnClient": [
+    "Brand Strategy feedback",
+    "Creative Direction feedback"
+  ],
+  "timelineMonths": [
+    { "label": "JUNE", "weeks": 2 },
+    { "label": "JULY", "weeks": 4 },
+    { "label": "AUGUST", "weeks": 4 },
+    { "label": "SEPTEMBER", "weeks": 4 },
+    { "label": "OCTOBER", "weeks": 4 },
+    { "label": "NOVEMBER", "weeks": 4 },
+    { "label": "DECEMBER", "weeks": 4 },
+    { "label": "JANUARY", "weeks": 4 }
+  ],
+  "currentWeek": 4,
+  "timelinePackages": [
+    { "id": 1, "name": "Brand Strategy", "startWeek": 1, "endWeek": 4, "status": "waiting" },
+    { "id": 2, "name": "Brand Messaging", "startWeek": 3, "endWeek": 5, "status": "inprogress" },
+    { "id": 3, "name": "Visual Universe Expansion", "startWeek": 3, "endWeek": 8, "status": "waiting" },
+    { "id": 4, "name": "Brand Expansion Deck", "startWeek": 9, "endWeek": 12, "status": "upcoming" },
+    { "id": 5, "name": "Packaging Design", "startWeek": 8, "endWeek": 12, "status": "upcoming" },
+    { "id": 6, "name": "Website Refresh", "startWeek": 13, "endWeek": 21, "status": "upcoming" },
+    { "id": 7, "name": "Photography", "startWeek": 7, "endWeek": 13, "status": "upcoming" },
+    { "id": 8, "name": "In-store display design", "startWeek": 17, "endWeek": 20, "status": "upcoming" },
+    { "id": 9, "name": "Full Social Management & Strategy", "startWeek": 7, "endWeek": 18, "status": "upcoming" }
+  ],
+  "packageDetails": [
+    {
+      "id": 1,
+      "code": "01",
+      "title": "BRAND STRATEGY",
+      "rows": [
+        { "week": "W1", "ourWork": "Brand strategy workshop", "clientProvides": "Completed brand strategy homework", "milestone": "Brand Strategy Workshop Completed" },
+        { "week": "W2", "ourWork": "Finalizing brand strategy deck", "clientProvides": "Any additional info during workshop (if applicable)", "milestone": "Final deck internal review" },
+        { "week": "W3", "ourWork": "Deliver final brand strategy deck", "clientProvides": "Feedback and revisions (if applicable)", "milestone": "Review and revision" },
+        { "week": "W4", "ourWork": "Finalize brand strategy", "clientProvides": "Final approval", "milestone": "Brand Strategy Approved \u2705" }
+      ]
+    },
+    {
+      "id": 2,
+      "code": "02",
+      "title": "BRAND MESSAGING",
+      "rows": [
+        { "week": "W2", "ourWork": "Preparation / Based on Brand strategy direction", "clientProvides": "Any additional info (if applicable)", "milestone": "Messaging framework prepared" },
+        { "week": "W3", "ourWork": "Develop brand messaging", "clientProvides": "Clarifications on messaging direction (if applicable)", "milestone": "Brand messaging internal review" },
+        { "week": "W4", "ourWork": "Deliver brand messaging deck", "clientProvides": "Feedback and revisions", "milestone": "Client review and feedback completed" },
+        { "week": "W5", "ourWork": "Finalize brand messaging", "clientProvides": "Final approval", "milestone": "Brand Messaging approved \u2705" }
+      ]
+    },
+    {
+      "id": 3,
+      "code": "03",
+      "title": "VISUAL EXPANSION DECK",
+      "rows": [
+        { "week": "W3", "ourWork": "Branding kickoff / Creative direction", "clientProvides": "", "milestone": "Creative direction presented" },
+        { "week": "W4", "ourWork": "Creative direction revisions & approval", "clientProvides": "Feedback on direction", "milestone": "Creative direction approved" },
+        { "week": "W5", "ourWork": "Branding concepts development", "clientProvides": "Additional feedback (if applicable)", "milestone": "Brand identity progress internal review" },
+        { "week": "W6", "ourWork": "Branding concepts presentation", "clientProvides": "Feedback and revisions", "milestone": "Brand identity presented" },
+        { "week": "W7", "ourWork": "Revisions & Finalization", "clientProvides": "Final approval", "milestone": "Brand Identity approved \u2705" },
+        { "week": "W8", "ourWork": "Final deliverables", "clientProvides": "", "milestone": "Branding package delivered" }
+      ]
+    },
+    {
+      "id": 4,
+      "code": "04",
+      "title": "BRANDING EXPANSION DECK",
+      "rows": [
+        { "week": "W9", "ourWork": "Kickoff & content collection", "clientProvides": "Expansion content", "milestone": "Content received & Deck structure approved" },
+        { "week": "W10", "ourWork": "Deck design & Layout development", "clientProvides": "Additional images or assets (if applicable)", "milestone": "Initial deck design internal review" },
+        { "week": "W11", "ourWork": "Content visualisation & deck completion", "clientProvides": "Feedback and revision request", "milestone": "Brand expansion deck presented" },
+        { "week": "W12", "ourWork": "Revisions and final delivery", "clientProvides": "Final approval", "milestone": "Final brand expansion deck delivered" }
+      ]
+    },
+    {
+      "id": 5,
+      "code": "05",
+      "title": "PACKAGING DESIGN",
+      "rows": [
+        { "week": "W8", "ourWork": "Kickoff and preparation / Creative direction", "clientProvides": "All needed assets (dielines, product info, packaging material specs, etc.)", "milestone": "Packaging requirements complete" },
+        { "week": "W9", "ourWork": "Concept development & mockups", "clientProvides": "Feedback on design direction", "milestone": "Initial Packaging concepts presented" },
+        { "week": "W10", "ourWork": "Design revisions", "clientProvides": "Feedback and confirm packaging details", "milestone": "Packaging design approved" },
+        { "week": "W11", "ourWork": "Finalization", "clientProvides": "Approval for production", "milestone": "Print-ready artwork approved \u2705" },
+        { "week": "W12", "ourWork": "Final deliverables", "clientProvides": "", "milestone": "Packaging files delivered" }
+      ]
+    },
+    {
+      "id": 6,
+      "code": "06",
+      "title": "WEBSITE REFRESH",
+      "rows": [
+        { "week": "W13", "ourWork": "Kickoff / Preparation and Asset collection", "clientProvides": "Website assets due this week", "milestone": "Website assets received & verified" },
+        { "week": "W14", "ourWork": "Homepage Design", "clientProvides": "Any outstanding assets & Homepage design feedback", "milestone": "Homepage design review" },
+        { "week": "W15", "ourWork": "Website design development", "clientProvides": "Final feedback on homepage & Clarifications on page content", "milestone": "Interior pages presented" },
+        { "week": "W16", "ourWork": "Design revisions & Finalization", "clientProvides": "Final approval of all website designs", "milestone": "Website Design approved \u2705" },
+        { "week": "W17", "ourWork": "Website Development", "clientProvides": "Confirm technical access (if not already provided)", "milestone": "Development kickoff" },
+        { "week": "W18", "ourWork": "Continue development", "clientProvides": "API keys or 3rd party credentials (if applicable)", "milestone": "Development progress internal review" },
+        { "week": "W19", "ourWork": "Continue development", "clientProvides": "Final content updates (if any)", "milestone": "Development Complete" },
+        { "week": "W20", "ourWork": "QA & Client review", "clientProvides": "Review staging website & submit final feedback", "milestone": "Staging site approved" },
+        { "week": "W21", "ourWork": "Final Refinements & Launch", "clientProvides": "Final authorization to launch", "milestone": "Website successfully launched" }
+      ]
+    },
+    {
+      "id": 7,
+      "code": "07",
+      "title": "PHOTOGRAPHY",
+      "rows": [
+        { "week": "W7", "ourWork": "Shot planning", "clientProvides": "Review shot list, Usage requirements", "milestone": "Shot list sent for review" },
+        { "week": "W8", "ourWork": "Finalize Shot List", "clientProvides": "Approve final shot list & confirm products/SKUs", "milestone": "Shot list approved \u2705" },
+        { "week": "W9", "ourWork": "Pre-production", "clientProvides": "Products must be delivered by this week", "milestone": "Pre-production underway" },
+        { "week": "W10", "ourWork": "Production preparation", "clientProvides": "Confirm availability for approvals (if needed)", "milestone": "Production ready" },
+        { "week": "W11", "ourWork": "Lifestyle photoshoot", "clientProvides": "Be available for real-time approvals (if attending remotely or on-site)", "milestone": "Photoshoot completed" },
+        { "week": "W12", "ourWork": "Post-production", "clientProvides": "Select preferred images & final approval of edits", "milestone": "Final images approved" },
+        { "week": "W13", "ourWork": "Final delivery", "clientProvides": "", "milestone": "Lifestyle photography delivered" }
+      ]
+    },
+    {
+      "id": 8,
+      "code": "08",
+      "title": "IN-STORE DISPLAY DESIGN",
+      "rows": [
+        { "week": "W17", "ourWork": "Kickoff & Asset Collection", "clientProvides": "In-store display assets due (structural dielines/templates, printer specs, etc)", "milestone": "Project requirements complete" },
+        { "week": "W18", "ourWork": "Creative direction & design development", "clientProvides": "Feedback on initial concepts", "milestone": "Creative direction presented" },
+        { "week": "W19", "ourWork": "Design presentation", "clientProvides": "Feedback and revisions", "milestone": "Client design review" },
+        { "week": "W20", "ourWork": "Revisions & finalization", "clientProvides": "Final approval", "milestone": "Display design approved \u2705" },
+        { "week": "W16", "ourWork": "Final deliverables", "clientProvides": "", "milestone": "Final display files delivered" }
+      ]
+    },
+    {
+      "id": 9,
+      "code": "09",
+      "title": "FULL SOCIAL MEDIA MANAGEMENT AND STRATEGY",
+      "rows": [
+        { "week": "W7", "ourWork": "Kickoff, Strategy & Audit", "clientProvides": "Access to social media accounts, all needed assets & details", "milestone": "Social media strategy approved" },
+        { "week": "W8", "ourWork": "Month 1 Content Planning", "clientProvides": "Approve content calendar", "milestone": "Month 1 Content Calendar approved" },
+        { "week": "W9", "ourWork": "Content Production", "clientProvides": "Approve content drafts", "milestone": "Month 1 Content Ready" },
+        { "week": "W10", "ourWork": "Scheduling & Launch", "clientProvides": "Approve final content before publishing", "milestone": "Month 1 Campaign Live" },
+        { "week": "W11", "ourWork": "Month 1 Performance review", "clientProvides": "Feedback on campaign performance", "milestone": "Month 1 Review Completed" },
+        { "week": "W12", "ourWork": "Month 2 Content Planning", "clientProvides": "Approve content calendar", "milestone": "Month 2 Content Calendar approved" },
+        { "week": "W13", "ourWork": "Content Production", "clientProvides": "Review and approve content", "milestone": "Month 2 Content Ready" },
+        { "week": "W14", "ourWork": "Publishing & Community Management", "clientProvides": "Respond to any escalated customer inquiries (if applicable)", "milestone": "Month 2 Campaign Live" },
+        { "week": "W15", "ourWork": "Performance Analysis", "clientProvides": "Feedback on campaign performance", "milestone": "Month 2 Review Completed" },
+        { "week": "W16", "ourWork": "Month 3 Content Planning", "clientProvides": "Final promotional content", "milestone": "Month 3 Content Calendar approved" },
+        { "week": "W17", "ourWork": "Content Production", "clientProvides": "Approve final content", "milestone": "Month 3 Content Ready" },
+        { "week": "W18", "ourWork": "Final Reporting & Recommendations", "clientProvides": "Final feedback meeting", "milestone": "3-month Campaign Completed" }
+      ]
+    }
+  ]
+}
