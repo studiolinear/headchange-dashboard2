@@ -2,6 +2,8 @@ let data = null;
 let editing = false;
 let dirty = false;
 
+const CLIENT_VIEW = document.body.dataset.view === 'client';
+
 const STATUS_COLORS = {
   completed: '#2FA84F',
   inprogress: '#2440D0',
@@ -14,8 +16,6 @@ const STATUS_LABELS = {
   waiting: 'WAITING ON CLIENT',
   upcoming: 'UPCOMING'
 };
-
-const CLIENT_VIEW = document.body.dataset.view === 'client';
 
 const app = document.getElementById('app');
 const editBtn = document.getElementById('editBtn');
@@ -100,6 +100,13 @@ function editableInput(value, onChange, tag = 'input') {
   i.addEventListener('input', () => { onChange(i.value); markDirty(); });
   return i;
 }
+function numberInput(value, min, max, onChange) {
+  const i = document.createElement('input');
+  i.type = 'number'; i.className = 'editable'; i.style.width = '55px';
+  i.min = min; i.max = max; i.value = value;
+  i.addEventListener('change', () => { onChange(Number(i.value)); markDirty(); render(); });
+  return i;
+}
 function selectStatus(value, onChange) {
   const s = document.createElement('select');
   s.className = 'editable';
@@ -119,6 +126,11 @@ function smallBtn(label, onClick, danger) {
   b.addEventListener('click', onClick);
   return b;
 }
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : s;
+  return d.innerHTML;
+}
 
 /* ---------- master render ---------- */
 function render() {
@@ -127,6 +139,17 @@ function render() {
   app.appendChild(renderCardsRow());
   app.appendChild(renderTimeline());
   data.packageDetails.forEach((pkg, idx) => app.appendChild(renderPackageSection(pkg, idx)));
+  if (editing) {
+    const addSectionBtn = smallBtn('+ Add package section', () => {
+      const nextNum = data.packageDetails.length + 1;
+      data.packageDetails.push({
+        id: Date.now(), code: String(nextNum).padStart(2, '0'), title: 'NEW PACKAGE', rows: []
+      });
+      markDirty(); render();
+    });
+    addSectionBtn.classList.add('add-row-btn');
+    app.appendChild(addSectionBtn);
+  }
 }
 
 /* ---------- header ---------- */
@@ -191,9 +214,7 @@ function renderStatusCard() {
     num.type = 'number'; num.min = 0; num.max = 100; num.className = 'editable';
     num.style.width = '70px';
     num.value = data.status.progress;
-    num.addEventListener('input', () => { data.status.progress = Number(num.value); markDirty(); track.style.width = num.value + '%'; pctLabel.textContent = num.value + '%'; });
-    const pctLabel = document.createElement('span');
-    pctLabel.textContent = data.status.progress + '%';
+    num.addEventListener('input', () => { data.status.progress = Number(num.value); markDirty(); track.style.width = num.value + '%'; });
     const trackWrap = el('div', 'progress-track');
     const track = el('div', 'progress-fill');
     track.style.width = data.status.progress + '%';
@@ -284,9 +305,7 @@ function renderThisWeekCard() {
   } else {
     c.appendChild(el('div', 'this-week-range', data.thisWeek.dateRange));
   }
-
   c.appendChild(renderStringList(data.thisWeek.tasks, 'Tasks', editing));
-
   c.appendChild(el('div', 'mini-heading', 'UPCOMING MILESTONE'));
   c.appendChild(renderStringList(data.thisWeek.upcomingMilestones, 'Milestones', editing, true));
   return c;
@@ -299,7 +318,6 @@ function renderWaitingCard() {
   return c;
 }
 
-/* generic editable string list (bullets) */
 function renderStringList(arr, label, isEditing, milestoneStyle, waitingStyle) {
   const wrap = document.createElement('div');
   if (!isEditing) {
@@ -311,8 +329,7 @@ function renderStringList(arr, label, isEditing, milestoneStyle, waitingStyle) {
   arr.forEach((t, i) => {
     const row = document.createElement('div');
     row.style.display = 'flex'; row.style.gap = '6px'; row.style.marginBottom = '4px';
-    const inp = editableInput(t, v => arr[i] = v);
-    row.appendChild(inp);
+    row.appendChild(editableInput(t, v => arr[i] = v));
     row.appendChild(smallBtn('✕', () => { arr.splice(i, 1); markDirty(); render(); }, true));
     wrap.appendChild(row);
   });
@@ -323,12 +340,18 @@ function renderStringList(arr, label, isEditing, milestoneStyle, waitingStyle) {
 }
 
 /* ---------- timeline / gantt ---------- */
+const NAME_COL_W = 170;
+const WEEK_COL_W = 30;
+
 function totalWeeks() {
   return data.timelineMonths.reduce((a, m) => a + m.weeks, 0);
 }
-
-const NAME_COL_W = 170;
-const WEEK_COL_W = 30;
+function clampCurrentWeek() {
+  const n = totalWeeks();
+  if (n < 1) return;
+  if (data.currentWeek > n) data.currentWeek = n;
+  if (data.currentWeek < 1) data.currentWeek = 1;
+}
 
 function renderTimeline() {
   const wrap = el('div', 'timeline-wrap');
@@ -338,7 +361,7 @@ function renderTimeline() {
   const cwField = el('div', 'current-week-field');
   cwField.appendChild(document.createTextNode('Current week:'));
   if (editing) {
-    cwField.appendChild(numberInput(data.currentWeek, 1, totalWeeks(), v => { data.currentWeek = v; }));
+    cwField.appendChild(numberInput(data.currentWeek, 1, Math.max(totalWeeks(), 1), v => { data.currentWeek = v; }));
   } else {
     const badge = el('span', null, 'W' + data.currentWeek);
     badge.style.color = 'var(--red)'; badge.style.fontWeight = '800';
@@ -347,7 +370,11 @@ function renderTimeline() {
   titleRow.appendChild(cwField);
   wrap.appendChild(titleRow);
 
+  if (editing) wrap.appendChild(renderMonthsEditor());
+
   const nWeeks = totalWeeks();
+  if (nWeeks < 1) return wrap;
+
   const tableContainer = el('div', 'timeline-table-container');
   const table = document.createElement('table');
   table.className = 'gantt';
@@ -385,10 +412,10 @@ function renderTimeline() {
     if (editing) {
       nameCell.appendChild(editableInput(pkg.name, v => pkg.name = v));
       const ctrl = document.createElement('div');
-      ctrl.style.display = 'flex'; ctrl.style.gap = '4px'; ctrl.style.marginTop = '4px';
-      const startSel = numberInput(pkg.startWeek, 1, nWeeks, v => pkg.startWeek = v);
-      const endSel = numberInput(pkg.endWeek, 1, nWeeks, v => pkg.endWeek = v);
-      ctrl.appendChild(startSel); ctrl.appendChild(el('span', null, 'to')); ctrl.appendChild(endSel);
+      ctrl.style.display = 'flex'; ctrl.style.gap = '4px'; ctrl.style.marginTop = '4px'; ctrl.style.alignItems = 'center';
+      ctrl.appendChild(numberInput(pkg.startWeek, 1, nWeeks, v => pkg.startWeek = v));
+      ctrl.appendChild(el('span', null, 'to'));
+      ctrl.appendChild(numberInput(pkg.endWeek, 1, nWeeks, v => pkg.endWeek = v));
       nameCell.appendChild(ctrl);
       nameCell.appendChild(selectStatus(pkg.status, v => pkg.status = v));
       nameCell.appendChild(smallBtn('✕ remove', () => { data.timelinePackages.splice(idx, 1); markDirty(); render(); }, true));
@@ -403,8 +430,10 @@ function renderTimeline() {
     barTd.style.position = 'relative';
     const bar = el('div', 'bar');
     const pct = 100 / nWeeks;
-    bar.style.left = ((pkg.startWeek - 1) * pct) + '%';
-    bar.style.width = ((pkg.endWeek - pkg.startWeek + 1) * pct) + '%';
+    const clampedStart = Math.min(Math.max(pkg.startWeek, 1), nWeeks);
+    const clampedEnd = Math.min(Math.max(pkg.endWeek, clampedStart), nWeeks);
+    bar.style.left = ((clampedStart - 1) * pct) + '%';
+    bar.style.width = ((clampedEnd - clampedStart + 1) * pct) + '%';
     bar.style.background = STATUS_COLORS[pkg.status] || '#999';
     barTd.appendChild(bar);
     tr.appendChild(barTd);
@@ -450,12 +479,37 @@ function renderTimeline() {
   return wrap;
 }
 
-function numberInput(value, min, max, onChange) {
-  const i = document.createElement('input');
-  i.type = 'number'; i.className = 'editable'; i.style.width = '55px';
-  i.min = min; i.max = max; i.value = value;
-  i.addEventListener('input', () => { onChange(Number(i.value)); markDirty(); });
-  return i;
+function renderMonthsEditor() {
+  const box = el('div', 'months-editor');
+  box.appendChild(el('div', 'section-label', `Timeline calendar — ${totalWeeks()} weeks total. Edit month names and how many weeks each spans.`));
+  const list = el('div', 'months-list');
+  data.timelineMonths.forEach((m, i) => {
+    const row = el('div', 'month-row');
+    row.appendChild(editableInput(m.label, v => { m.label = v; }));
+    row.appendChild(numberInput(m.weeks, 1, 12, v => { m.weeks = v; clampCurrentWeek(); }));
+    row.appendChild(el('span', 'label', 'weeks'));
+    row.appendChild(smallBtn('✕', () => {
+      data.timelineMonths.splice(i, 1);
+      clampCurrentWeek(); markDirty(); render();
+    }, true));
+    list.appendChild(row);
+  });
+  box.appendChild(list);
+  const addBtn = smallBtn('+ Add month', () => {
+    data.timelineMonths.push({ label: 'MONTH ' + (data.timelineMonths.length + 1), weeks: 4 });
+    markDirty(); render();
+  });
+  addBtn.classList.add('add-row-btn');
+  box.appendChild(addBtn);
+
+  const resetBtn6x4 = smallBtn('Reset to 6 months × 4 weeks', () => {
+    data.timelineMonths = [1, 2, 3, 4, 5, 6].map(n => ({ label: 'MONTH ' + n, weeks: 4 }));
+    clampCurrentWeek(); markDirty(); render();
+  });
+  resetBtn6x4.classList.add('add-row-btn');
+  box.appendChild(resetBtn6x4);
+
+  return box;
 }
 
 /* ---------- package detail sections ---------- */
@@ -479,9 +533,9 @@ function renderPackageSection(pkg, idx) {
   const table = document.createElement('table');
   table.className = 'pkg-table';
   const thead = document.createElement('tr');
-  ['WEEK', 'OUR WORK', 'CLIENT NEEDS TO PROVIDE', 'MILESTONE/REVIEW', editing ? '' : null].filter(x => x !== null).forEach(h => {
-    thead.appendChild(el('th', null, h));
-  });
+  const headers = ['WEEK', 'OUR WORK', 'CLIENT NEEDS TO PROVIDE', 'MILESTONE/REVIEW'];
+  if (editing) headers.push('');
+  headers.forEach(h => thead.appendChild(el('th', null, h)));
   table.appendChild(thead);
 
   pkg.rows.forEach((row, rIdx) => {
@@ -500,15 +554,15 @@ function renderPackageSection(pkg, idx) {
       actionsTd.appendChild(smallBtn('✕', () => { pkg.rows.splice(rIdx, 1); markDirty(); render(); }, true));
       tr.append(weekTd, workTd, clientTd, msTd, actionsTd);
     } else {
-      const weekTd = el('td', 'week-col', row.week);
-      const workTd = el('td', null, row.ourWork);
-      const clientTd = el('td', null, row.clientProvides);
-      const msTd = el('td', null, row.milestone);
-      tr.append(weekTd, workTd, clientTd, msTd);
+      tr.append(
+        el('td', 'week-col', row.week),
+        el('td', null, row.ourWork),
+        el('td', null, row.clientProvides),
+        el('td', null, row.milestone)
+      );
     }
     table.appendChild(tr);
   });
-
   sec.appendChild(table);
 
   if (editing) {
@@ -521,10 +575,4 @@ function renderPackageSection(pkg, idx) {
   }
 
   return sec;
-}
-
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s == null ? '' : s;
-  return d.innerHTML;
 }
